@@ -24,18 +24,20 @@ public class CategoryCatalog {
 
     @NonNull
     public List<Category> findAll() {
-        return categoryRepository.findAll();
+        return categoryRepository.findAllByDeletedFalse();
     }
 
     public Set<Ad> findAllAds(CategoryId categoryId) {
-        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new RuntimeException("Category Not Found!!!"));
+        Category category = categoryRepository.findByIdAndDeletedFalse(categoryId)
+                .orElseThrow(() -> new RuntimeException("Category Not Found!!!"));
         return category.getAds();
     }
 
     @NonNull
     public Category findById(@NonNull CategoryId categoryId) {
         Objects.requireNonNull(categoryId, "categoryId must not be null");
-        return categoryRepository.findById(categoryId).orElseThrow(() -> new RuntimeException("Category Not Found!!!"));
+        return categoryRepository.findByIdAndDeletedFalse(categoryId)
+                .orElseThrow(() -> new RuntimeException("Category Not Found!!!"));
     }
 
     public Category saveCategory(Category category) {
@@ -44,8 +46,7 @@ public class CategoryCatalog {
     }
 
     public void deleteById(CategoryId categoryId) {
-        categoryRepository.deleteById(categoryId);
+        categoryRepository.findById(categoryId).get().setDeleted(true);
     }
-
 
 }

@@ -1,6 +1,7 @@
 package mk.ukim.finki.emt.advertisement.adcatalog.domain.model;
 
 import lombok.Getter;
+import lombok.Setter;
 import mk.ukim.finki.emt.advertisement.sharedkernel.domain.base.AbstractEntity;
 import mk.ukim.finki.emt.advertisement.sharedkernel.domain.financial.Money;
 
@@ -11,6 +12,7 @@ import java.util.Set;
 
 @Entity
 @Getter
+@Setter
 @Table(name = "ads")
 public class Ad extends AbstractEntity<AdId> {
 
@@ -37,6 +39,8 @@ public class Ad extends AbstractEntity<AdId> {
 
     private String imgUrl;
 
+    private Boolean deleted;
+
     @ManyToMany(mappedBy = "ads", fetch = FetchType.EAGER)
     private Set<Category> categories = new HashSet<>();
 
@@ -50,6 +54,7 @@ public class Ad extends AbstractEntity<AdId> {
         this.isProduct = isProduct;
         this.imgUrl = imgUrl;
         this.categories = new HashSet<>();
+        deleted = false;
     }
 
     public Ad(String title, String description, Money money, int quantity, boolean isProduct, String imgUrl) {
@@ -60,9 +65,11 @@ public class Ad extends AbstractEntity<AdId> {
         this.isProduct = isProduct;
         this.imgUrl = imgUrl;
         this.categories = new HashSet<>();
+        deleted = false;
     }
 
     public Ad() {
+        deleted = false;
     }
 
     public void subtractQuantity(int qnt) {

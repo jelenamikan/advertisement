@@ -3,6 +3,7 @@ package mk.ukim.finki.emt.advertisement.adcatalog.domain.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import mk.ukim.finki.emt.advertisement.sharedkernel.domain.base.AbstractEntity;
 
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import java.util.Set;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@Setter
 @Table(name = "categories")
 public class Category extends AbstractEntity<CategoryId> {
 
@@ -19,6 +20,8 @@ public class Category extends AbstractEntity<CategoryId> {
     private Long version;
 
     private String name;
+
+    private Boolean deleted;
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
@@ -31,6 +34,11 @@ public class Category extends AbstractEntity<CategoryId> {
         super(categoryId);
         this.name = name;
         this.ads = new HashSet<>();
+        deleted = false;
+    }
+
+    public Category(){
+        deleted = false;
     }
 
 }

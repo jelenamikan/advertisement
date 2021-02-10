@@ -17,7 +17,6 @@ import org.springframework.transaction.event.TransactionalEventListener;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -33,26 +32,26 @@ public class AdCatalog {
 
     @NonNull
     public List<Ad> findAll() {
-        return adRepository.findAll();
+        return adRepository.findAllByDeletedFalse();
     }
 
     @NonNull
     public Ad findById(@NonNull AdId adId) {
         Objects.requireNonNull(adId, "adId must not be null");
-        return adRepository.findById(adId).orElseThrow(() -> new RuntimeException("Category Not Found!!!"));
+        return adRepository.findByIdAndDeletedFalse(adId).orElseThrow(() -> new RuntimeException("Category Not Found!!!"));
     }
 
     public List<Ad> findProducts(){
-        return adRepository.findAllByIsProduct(true);
+        return adRepository.findAllByIsProductAndDeletedFalse(true);
     }
 
     public List<Ad> findBasicAds(){
-        return adRepository.findAllByIsProduct(false);
+        return adRepository.findAllByIsProductAndDeletedFalse(false);
     }
 
     @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
     public void onOrderCreatedEvent(OrderItemAddedEvent event) {
-        Ad ad = adRepository.findById(event.getAdId()).orElseThrow(RuntimeException::new);
+        Ad ad = adRepository.findByIdAndDeletedFalse(event.getAdId()).orElseThrow(RuntimeException::new);
         ad.subtractQuantity(event.getQuantity());
         adRepository.save(ad);
     }
@@ -65,7 +64,7 @@ public class AdCatalog {
         Ad ad = new Ad(new AdId(), adDto.getTitle(), adDto.getDescription(), adDto.getTypes(), money, adDto.getQuantity(), adDto.isProduct(), adDto.getImgUrl());
         for(String str: adDto.getCategories()){
             CategoryId categoryId = new CategoryId(str);
-            Category category = categoryRepository.findById(categoryId)
+            Category category = categoryRepository.findByIdAndDeletedFalse(categoryId)
                     .orElseThrow(() -> new RuntimeException("Category Not Found!!!"));
             ad.getCategories().add(category);
         }
@@ -73,7 +72,7 @@ public class AdCatalog {
     }
 
     public void deleteById(AdId adId) {
-        adRepository.deleteById(adId);
+        adRepository.findById(adId).get().setDeleted(true);
     }
 
 }
