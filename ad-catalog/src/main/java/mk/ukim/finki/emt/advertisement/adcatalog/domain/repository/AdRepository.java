@@ -2,6 +2,7 @@ package mk.ukim.finki.emt.advertisement.adcatalog.domain.repository;
 
 import mk.ukim.finki.emt.advertisement.adcatalog.domain.model.Ad;
 import mk.ukim.finki.emt.advertisement.adcatalog.domain.model.AdId;
+import mk.ukim.finki.emt.advertisement.adcatalog.domain.model.Type;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

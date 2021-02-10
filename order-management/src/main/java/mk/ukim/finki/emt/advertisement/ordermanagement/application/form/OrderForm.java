@@ -10,6 +10,9 @@ import java.util.List;
 public class OrderForm implements Serializable {
 
     @NonNull
+    private String userId;
+
+    @NonNull
     private Currency currency;
 
     @NonNull
@@ -32,5 +35,13 @@ public class OrderForm implements Serializable {
 
     public List<OrderItemForm> getItems() {
         return items;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

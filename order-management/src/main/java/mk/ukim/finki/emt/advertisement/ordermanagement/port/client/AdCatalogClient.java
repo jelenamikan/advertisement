@@ -24,9 +24,9 @@ class AdCatalogClient implements AdCatalog {
     private final RestTemplate restTemplate;
     private final String serverUrl;
 
-    AdCatalogClient(@Value("${app.product-catalog.url}") String serverUrl,
-                         @Value("${app.product-catalog.connect-timeout-ms}") int connectTimeout,
-                         @Value("${app.product-catalog.read-timeout-ms}") int readTimeout) {
+    AdCatalogClient(@Value("${app.ad-catalog.url}") String serverUrl,
+                         @Value("${app.ad-catalog.connect-timeout-ms}") int connectTimeout,
+                         @Value("${app.ad-catalog.read-timeout-ms}") int readTimeout) {
         this.serverUrl = serverUrl;
         restTemplate = new RestTemplate();
         SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();

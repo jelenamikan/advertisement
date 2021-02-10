@@ -20,6 +20,7 @@
     <modules>
         <module>account-service</module>
         <module>ad-catalog</module>
+        <module>order-management</module>
         <module>shared-kernel</module>
     </modules>
 

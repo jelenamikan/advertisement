@@ -5,10 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import mk.ukim.finki.emt.advertisement.adcatalog.domain.model.AdId;
 import mk.ukim.finki.emt.advertisement.adcatalog.domain.model.CategoryId;
+import mk.ukim.finki.emt.advertisement.adcatalog.domain.model.Type;
 import mk.ukim.finki.emt.advertisement.sharedkernel.domain.financial.Currency;
 import org.springframework.lang.NonNull;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @NoArgsConstructor
@@ -22,6 +24,8 @@ public class AdDto {
 
     @NonNull
     private String description;
+
+    Set<Type> types;
 
     private Currency currency;
 

@@ -16,5 +16,4 @@ public class AdId extends DomainObjectId {
         super(id);
     }
 
-
 }

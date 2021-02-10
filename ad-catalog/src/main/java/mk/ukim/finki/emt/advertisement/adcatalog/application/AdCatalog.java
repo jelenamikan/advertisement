@@ -62,7 +62,7 @@ public class AdCatalog {
         if (adDto.getCurrency() != null){
             money = new Money(adDto.getCurrency(), adDto.getPrice());
         }
-        Ad ad = new Ad(new AdId(), adDto.getTitle(), adDto.getDescription(), money, adDto.getQuantity(), adDto.isProduct(), adDto.getImgUrl());
+        Ad ad = new Ad(new AdId(), adDto.getTitle(), adDto.getDescription(), adDto.getTypes(), money, adDto.getQuantity(), adDto.isProduct(), adDto.getImgUrl());
         for(String str: adDto.getCategories()){
             CategoryId categoryId = new CategoryId(str);
             Category category = categoryRepository.findById(categoryId)

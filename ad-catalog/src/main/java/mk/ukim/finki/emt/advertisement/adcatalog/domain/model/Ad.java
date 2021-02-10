@@ -6,6 +6,7 @@ import mk.ukim.finki.emt.advertisement.sharedkernel.domain.financial.Money;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,6 +22,12 @@ public class Ad extends AbstractEntity<AdId> {
 
     private String description;
 
+    @ElementCollection(targetClass = Type.class)
+    @CollectionTable(name="ad_types")
+    @Column(name = "types")
+    @Enumerated(EnumType.STRING)
+    private Set<Type> types = new HashSet<>();
+
     @Embedded
     private Money money;
 
@@ -33,10 +40,11 @@ public class Ad extends AbstractEntity<AdId> {
     @ManyToMany(mappedBy = "ads", fetch = FetchType.EAGER)
     private Set<Category> categories = new HashSet<>();
 
-    public Ad(AdId id, String title, String description, Money money, int quantity, boolean isProduct, String imgUrl) {
+    public Ad(AdId id, String title, String description, Set<Type> types, Money money, int quantity, boolean isProduct, String imgUrl) {
         super(id);
         this.title = title;
         this.description = description;
+        this.types = types;
         this.money = money;
         this.quantity = quantity;
         this.isProduct = isProduct;

@@ -2,12 +2,13 @@ package mk.ukim.finki.emt.advertisement.ordermanagement.application;
 
 import mk.ukim.finki.emt.advertisement.ordermanagement.application.form.OrderForm;
 import mk.ukim.finki.emt.advertisement.ordermanagement.application.form.RecipientAddressForm;
+import mk.ukim.finki.emt.advertisement.ordermanagement.domain.event.OrderCreated;
+import mk.ukim.finki.emt.advertisement.ordermanagement.domain.event.OrderItemAdded;
 import mk.ukim.finki.emt.advertisement.ordermanagement.domain.model.Order;
 import mk.ukim.finki.emt.advertisement.ordermanagement.domain.model.OrderId;
 import mk.ukim.finki.emt.advertisement.ordermanagement.domain.model.RecipientAddress;
 import mk.ukim.finki.emt.advertisement.ordermanagement.domain.repository.OrderRepository;
-import mk.ukim.finki.emt.advertisement.ordermanagement.domain.event.OrderCreated;
-import mk.ukim.finki.emt.advertisement.ordermanagement.domain.event.OrderItemAdded;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.time.Instant;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -42,7 +44,7 @@ public class OrderCatalog {
         this.adCatalog = adCatalog;
     }
 
-    public OrderId createOrder(@NonNull OrderForm order) {
+    public Order createOrder(@NonNull OrderForm order) {
         Objects.requireNonNull(order,"order must not be null");
         Set<ConstraintViolation<OrderForm>> constraintViolations = validator.validate(order);
 
@@ -56,18 +58,18 @@ public class OrderCatalog {
         applicationEventPublisher.publishEvent(new OrderCreated(newOrder.id(),newOrder.getOrderedOn()));
         newOrder.getItems().forEach(orderItem -> applicationEventPublisher.publishEvent(new OrderItemAdded(newOrder.id(),
                 orderItem.id(),orderItem.getAdId(),orderItem.getQuantity(), Instant.now())));
-        return newOrder.id();
+        return newOrder;
     }
 
     @NonNull
-    public Optional<Order> findById(@NonNull OrderId orderId) {
+    public Order findById(@NonNull OrderId orderId) {
         Objects.requireNonNull(orderId, "orderId must not be null");
-        return orderRepository.findById(orderId);
+        return orderRepository.findById(orderId).orElseThrow(() -> new RuntimeException("Order Not Found !!!"));
     }
 
     @NonNull
     private Order toDomainModel(@NonNull OrderForm orderForm) {
-        Order order = new Order(Instant.now(), orderForm.getCurrency(),
+        Order order = new Order(orderForm.getUserId(), Instant.now(), orderForm.getCurrency(),
                 toDomainModel(orderForm.getBillingAddress()));
         orderForm.getItems().forEach(item -> order.addItem(item.getAd(), item.getQuantity()));
         return order;
@@ -78,6 +80,8 @@ public class OrderCatalog {
         return new RecipientAddress(form.getName(), form.getAddress(),form.getCity(), form.getCountry());
     }
 
-
+    public List<Order> findAllByUserId(String userId){
+        return orderRepository.findAllByUserId(userId);
+    }
 
 }

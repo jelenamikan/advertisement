@@ -23,7 +23,8 @@ public class Order extends AbstractEntity<OrderId> {
     @Version
     private Long version;
 
-    private String
+    @NonNull
+    private String userId;
 
     @Column(name = "ordered_on", nullable = false)
     private Instant orderedOn;
@@ -53,13 +54,18 @@ public class Order extends AbstractEntity<OrderId> {
 
     }
 
-    public Order(@NonNull Instant orderedOn, @NonNull Currency currency, @NonNull RecipientAddress billingAddress) {
+    public Order(@NonNull String userId, @NonNull Instant orderedOn, @NonNull Currency currency, @NonNull RecipientAddress billingAddress) {
         super(DomainObjectId.randomId(OrderId.class));
+        this.userId = userId;
         this.items = new HashSet<>();
         setCurrency(currency);
         setOrderedOn(orderedOn);
         setState(OrderState.RECEIVED);
         setBillingAddress(billingAddress);
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     @NonNull

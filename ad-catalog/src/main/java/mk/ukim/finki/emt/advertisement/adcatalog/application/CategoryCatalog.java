@@ -39,7 +39,8 @@ public class CategoryCatalog {
     }
 
     public Category saveCategory(Category category) {
-        return categoryRepository.save(category);
+        Category cat = new Category(new CategoryId(), category.getName());
+        return categoryRepository.save(cat);
     }
 
     public void deleteById(CategoryId categoryId) {

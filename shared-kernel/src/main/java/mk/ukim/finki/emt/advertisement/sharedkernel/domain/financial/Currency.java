@@ -1,5 +1,5 @@
 package mk.ukim.finki.emt.advertisement.sharedkernel.domain.financial;
 
 public enum Currency {
-    EUR, MKD
+    EUR, MKD, RSD, USD
 }
