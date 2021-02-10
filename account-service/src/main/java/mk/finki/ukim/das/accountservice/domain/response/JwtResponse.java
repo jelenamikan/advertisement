@@ -1,16 +1,18 @@
-package mk.finki.ukim.das.accountservice.response;
+package mk.finki.ukim.das.accountservice.domain.response;
+
+import mk.finki.ukim.das.accountservice.domain.model.UserId;
 
 import java.util.List;
 
 public class JwtResponse {
     private String token;
     private String type = "Bearer";
-    private Long id;
+    private UserId id;
     private String username;
     private String email;
     private List<String> roles;
 
-    public JwtResponse(String accessToken, Long id, String username, String email, List<String> roles) {
+    public JwtResponse(String accessToken, UserId id, String username, String email, List<String> roles) {
         this.token = accessToken;
         this.id = id;
         this.username = username;
@@ -34,11 +36,11 @@ public class JwtResponse {
         this.type = tokenType;
     }
 
-    public Long getId() {
+    public UserId getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UserId id) {
         this.id = id;
     }
 

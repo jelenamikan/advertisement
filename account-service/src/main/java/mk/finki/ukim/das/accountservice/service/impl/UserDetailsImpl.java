@@ -1,7 +1,8 @@
 package mk.finki.ukim.das.accountservice.service.impl;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import mk.finki.ukim.das.accountservice.model.User;
+import mk.finki.ukim.das.accountservice.domain.model.User;
+import mk.finki.ukim.das.accountservice.domain.model.UserId;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,7 +12,7 @@ import java.util.Objects;
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    private UserId id;
 
     private String username;
 
@@ -26,9 +27,9 @@ public class UserDetailsImpl implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Long id, String username, String email, String password,
+    public UserDetailsImpl(UserId userId, String username, String email, String password,
                            String firstName, String lastName, Collection<? extends GrantedAuthority> authorities) {
-        this.id = id;
+        this.id = userId;
         this.username = username;
         this.email = email;
         this.password = password;
@@ -40,7 +41,7 @@ public class UserDetailsImpl implements UserDetails {
     public static UserDetailsImpl build(User user) {
 
         return new UserDetailsImpl(
-                user.getUserId(),
+                user.getId(),
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
@@ -54,7 +55,7 @@ public class UserDetailsImpl implements UserDetails {
         return authorities;
     }
 
-    public Long getId() {
+    public UserId getId() {
         return id;
     }
 

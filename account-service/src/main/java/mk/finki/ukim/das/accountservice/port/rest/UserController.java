@@ -1,6 +1,7 @@
-package mk.finki.ukim.das.accountservice.controller;
+package mk.finki.ukim.das.accountservice.port.rest;
 
-import mk.finki.ukim.das.accountservice.model.User;
+import mk.finki.ukim.das.accountservice.domain.model.User;
+import mk.finki.ukim.das.accountservice.domain.model.UserId;
 import mk.finki.ukim.das.accountservice.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class UserController {
     // responds to GET request for one user by username, returns the user's ID
     @GetMapping("/{username}")
     @ResponseStatus(HttpStatus.OK)
-    public Long getUserById(@PathVariable String username){
+    public UserId getUserById(@PathVariable String username){
         return userService.getId(username);
     }
 

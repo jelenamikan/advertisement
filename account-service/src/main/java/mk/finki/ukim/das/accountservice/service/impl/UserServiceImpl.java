@@ -1,7 +1,8 @@
 package mk.finki.ukim.das.accountservice.service.impl;
 
-import mk.finki.ukim.das.accountservice.model.User;
-import mk.finki.ukim.das.accountservice.repository.UserRepository;
+import mk.finki.ukim.das.accountservice.domain.model.User;
+import mk.finki.ukim.das.accountservice.domain.model.UserId;
+import mk.finki.ukim.das.accountservice.domain.repository.UserRepository;
 import mk.finki.ukim.das.accountservice.service.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,12 +33,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     // returns the ID of the user with the given username
     @Override
-    public Long getId(String username) {
+    public UserId getId(String username) {
         Optional<User> user = userRepository.findByUsername(username);
         if (!user.isPresent()){
             throw new UsernameNotFoundException("User Not Found with username: " + username);
         }
-        return user.get().getUserId();
+        return user.get().getId();
     }
 
     // returns UserDetails for the given user by his username, if it doesn't exists throws Exception

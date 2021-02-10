@@ -1,12 +1,13 @@
-package mk.finki.ukim.das.accountservice.controller;
+package mk.finki.ukim.das.accountservice.port.rest;
 
 import mk.finki.ukim.das.accountservice.config.JwtUtils;
-import mk.finki.ukim.das.accountservice.model.User;
-import mk.finki.ukim.das.accountservice.repository.UserRepository;
-import mk.finki.ukim.das.accountservice.request.LoginRequest;
-import mk.finki.ukim.das.accountservice.request.SignupRequest;
-import mk.finki.ukim.das.accountservice.response.JwtResponse;
-import mk.finki.ukim.das.accountservice.response.MessageResponse;
+import mk.finki.ukim.das.accountservice.domain.model.User;
+import mk.finki.ukim.das.accountservice.domain.model.UserId;
+import mk.finki.ukim.das.accountservice.domain.repository.UserRepository;
+import mk.finki.ukim.das.accountservice.domain.request.LoginRequest;
+import mk.finki.ukim.das.accountservice.domain.request.SignupRequest;
+import mk.finki.ukim.das.accountservice.domain.response.JwtResponse;
+import mk.finki.ukim.das.accountservice.domain.response.MessageResponse;
 import mk.finki.ukim.das.accountservice.service.impl.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -73,7 +74,7 @@ public class AuthController {
         }
 
         // Create new user's account
-        User user = new User(signUpRequest.getUsername(),
+        User user = new User(new UserId(), signUpRequest.getUsername(),
                 signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));
 

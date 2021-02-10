@@ -1,4 +1,4 @@
-package mk.finki.ukim.das.accountservice.response;
+package mk.finki.ukim.das.accountservice.domain.response;
 
 public class MessageResponse {
     private String message;

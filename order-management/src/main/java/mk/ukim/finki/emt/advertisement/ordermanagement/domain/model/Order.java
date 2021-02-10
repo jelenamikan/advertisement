@@ -20,11 +20,10 @@ import java.util.stream.Stream;
 @Getter
 public class Order extends AbstractEntity<OrderId> {
 
-    @EmbeddedId
-    private OrderId id;
-
     @Version
     private Long version;
+
+    private String
 
     @Column(name = "ordered_on", nullable = false)
     private Instant orderedOn;

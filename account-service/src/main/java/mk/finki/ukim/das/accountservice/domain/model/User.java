@@ -1,6 +1,7 @@
-package mk.finki.ukim.das.accountservice.model;
+package mk.finki.ukim.das.accountservice.domain.model;
 
 import lombok.*;
+import mk.ukim.finki.emt.advertisement.sharedkernel.domain.base.AbstractEntity;
 
 import javax.persistence.*;
 
@@ -15,12 +16,10 @@ import javax.persistence.*;
                 @UniqueConstraint(columnNames = "username"),
                 @UniqueConstraint(columnNames = "email")
         })
-public class User {
+public class User extends AbstractEntity<UserId> {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long userId;
+    @Version
+    private Long version;
 
     @Column(unique = true)
     private String username;
@@ -33,7 +32,8 @@ public class User {
 
     private String email;
 
-    public User(String username, String email, String password) {
+    public User(UserId userId, String username, String email, String password) {
+        super(userId);
         this.username = username;
         this.email = email;
         this.password = password;

@@ -1,4 +1,4 @@
-package mk.ukim.finki.emt.advertisement.ordermanagement.port;
+package mk.ukim.finki.emt.advertisement.ordermanagement.port.client;
 
 import mk.ukim.finki.emt.advertisement.ordermanagement.application.AdCatalog;
 import mk.ukim.finki.emt.advertisement.ordermanagement.domain.model.Ad;

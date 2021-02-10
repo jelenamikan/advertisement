@@ -1,4 +1,4 @@
-package mk.ukim.finki.emt.advertisement.ordermanagement.event;
+package mk.ukim.finki.emt.advertisement.ordermanagement.domain.event;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

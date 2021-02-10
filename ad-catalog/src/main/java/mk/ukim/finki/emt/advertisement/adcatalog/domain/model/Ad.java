@@ -27,7 +27,7 @@ public class Ad extends AbstractEntity<AdId> {
     private int quantity;
 
     private Boolean isProduct;
-    
+
     private String imgUrl;
 
     @ManyToMany(mappedBy = "ads", fetch = FetchType.EAGER)

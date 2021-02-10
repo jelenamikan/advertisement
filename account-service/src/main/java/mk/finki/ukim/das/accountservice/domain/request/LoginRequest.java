@@ -1,4 +1,4 @@
-package mk.finki.ukim.das.accountservice.request;
+package mk.finki.ukim.das.accountservice.domain.request;
 
 import javax.validation.constraints.NotBlank;
 
