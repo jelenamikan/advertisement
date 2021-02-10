@@ -26,27 +26,31 @@ public class Ad extends AbstractEntity<AdId> {
 
     private int quantity;
 
-    private boolean isProduct;
+    private Boolean isProduct;
+    
+    private String imgUrl;
 
     @ManyToMany(mappedBy = "ads", fetch = FetchType.EAGER)
     private Set<Category> categories = new HashSet<>();
 
-    public Ad(AdId id, String title, String description, Money money, int quantity, boolean isProduct) {
+    public Ad(AdId id, String title, String description, Money money, int quantity, boolean isProduct, String imgUrl) {
         super(id);
         this.title = title;
         this.description = description;
         this.money = money;
         this.quantity = quantity;
         this.isProduct = isProduct;
+        this.imgUrl = imgUrl;
         this.categories = new HashSet<>();
     }
 
-    public Ad(String title, String description, Money money, int quantity, boolean isProduct) {
+    public Ad(String title, String description, Money money, int quantity, boolean isProduct, String imgUrl) {
         this.title = title;
         this.description = description;
         this.money = money;
         this.quantity = quantity;
         this.isProduct = isProduct;
+        this.imgUrl = imgUrl;
         this.categories = new HashSet<>();
     }
 

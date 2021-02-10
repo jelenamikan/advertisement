@@ -42,6 +42,14 @@ public class AdCatalog {
         return adRepository.findById(adId).orElseThrow(() -> new RuntimeException("Category Not Found!!!"));
     }
 
+    public List<Ad> findProducts(){
+        return adRepository.findAllByIsProduct(true);
+    }
+
+    public List<Ad> findBasicAds(){
+        return adRepository.findAllByIsProduct(false);
+    }
+
     @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
     public void onOrderCreatedEvent(OrderItemAddedEvent event) {
         Ad ad = adRepository.findById(event.getAdId()).orElseThrow(RuntimeException::new);
@@ -54,7 +62,7 @@ public class AdCatalog {
         if (adDto.getCurrency() != null){
             money = new Money(adDto.getCurrency(), adDto.getPrice());
         }
-        Ad ad = new Ad(new AdId(), adDto.getTitle(), adDto.getDescription(), money, adDto.getQuantity(), adDto.isProduct());
+        Ad ad = new Ad(new AdId(), adDto.getTitle(), adDto.getDescription(), money, adDto.getQuantity(), adDto.isProduct(), adDto.getImgUrl());
         for(String str: adDto.getCategories()){
             CategoryId categoryId = new CategoryId(str);
             Category category = categoryRepository.findById(categoryId)

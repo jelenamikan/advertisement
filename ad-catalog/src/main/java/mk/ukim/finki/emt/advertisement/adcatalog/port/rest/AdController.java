@@ -34,6 +34,18 @@ public class AdController {
         return adCatalog.findById(id);
     }
 
+    @GetMapping("/products")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Ad> getAllProducts(){
+        return adCatalog.findProducts();
+    }
+
+    @GetMapping("/basic")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Ad> getAllBasicAds(){
+        return adCatalog.findBasicAds();
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Ad createAd(@RequestBody AdDto adDto){

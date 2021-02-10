@@ -32,6 +32,8 @@ public class AdDto {
     @NonNull
     private boolean isProduct;
 
+    private String imgUrl;
+
     List<String> categories;
 
 }
