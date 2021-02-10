@@ -17,4 +17,6 @@ public interface AdRepository extends JpaRepository<Ad, AdId> {
 
     List<Ad> findAllByIsProductAndDeletedFalse(Boolean isProduct);
 
+    List<Ad> findAllByCreatorIdEqualsAndDeletedFalse(String creatorId);
+
 }

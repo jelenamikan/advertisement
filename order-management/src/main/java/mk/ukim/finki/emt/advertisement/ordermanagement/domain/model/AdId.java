@@ -7,7 +7,7 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class AdId extends DomainObjectId {
 
-    private AdId() {
+    public AdId() {
         super(DomainObjectId.randomId(AdId.class).toString());
     }
 

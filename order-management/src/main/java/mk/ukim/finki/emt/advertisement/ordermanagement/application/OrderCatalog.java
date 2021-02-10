@@ -44,7 +44,7 @@ public class OrderCatalog {
         this.adCatalog = adCatalog;
     }
 
-    public Order createOrder(@NonNull OrderForm order) {
+    public OrderId createOrder(@NonNull OrderForm order) {
         Objects.requireNonNull(order,"order must not be null");
         Set<ConstraintViolation<OrderForm>> constraintViolations = validator.validate(order);
 
@@ -58,7 +58,7 @@ public class OrderCatalog {
         applicationEventPublisher.publishEvent(new OrderCreated(newOrder.id(),newOrder.getOrderedOn()));
         newOrder.getItems().forEach(orderItem -> applicationEventPublisher.publishEvent(new OrderItemAdded(newOrder.id(),
                 orderItem.id(),orderItem.getAdId(),orderItem.getQuantity(), Instant.now())));
-        return newOrder;
+        return newOrder.getId();
     }
 
     @NonNull

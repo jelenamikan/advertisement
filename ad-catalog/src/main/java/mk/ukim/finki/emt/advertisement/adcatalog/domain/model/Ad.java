@@ -7,7 +7,6 @@ import mk.ukim.finki.emt.advertisement.sharedkernel.domain.financial.Money;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -23,6 +22,8 @@ public class Ad extends AbstractEntity<AdId> {
     private String title;
 
     private String description;
+
+    private String creatorId;
 
     @ElementCollection(targetClass = Type.class)
     @CollectionTable(name="ad_types")
@@ -44,10 +45,12 @@ public class Ad extends AbstractEntity<AdId> {
     @ManyToMany(mappedBy = "ads", fetch = FetchType.EAGER)
     private Set<Category> categories = new HashSet<>();
 
-    public Ad(AdId id, String title, String description, Set<Type> types, Money money, int quantity, boolean isProduct, String imgUrl) {
+    public Ad(AdId id, String title, String description, String creatorId, Set<Type> types, Money money, int quantity,
+              boolean isProduct, String imgUrl) {
         super(id);
         this.title = title;
         this.description = description;
+        this.creatorId = creatorId;
         this.types = types;
         this.money = money;
         this.quantity = quantity;
@@ -57,9 +60,10 @@ public class Ad extends AbstractEntity<AdId> {
         deleted = false;
     }
 
-    public Ad(String title, String description, Money money, int quantity, boolean isProduct, String imgUrl) {
+    public Ad(String title, String description, String creatorId, Money money, int quantity, boolean isProduct, String imgUrl) {
         this.title = title;
         this.description = description;
+        this.creatorId = creatorId;
         this.money = money;
         this.quantity = quantity;
         this.isProduct = isProduct;
@@ -82,6 +86,5 @@ public class Ad extends AbstractEntity<AdId> {
     public void addQuantity(int qnt) {
         this.quantity +=qnt;
     }
-
 
 }

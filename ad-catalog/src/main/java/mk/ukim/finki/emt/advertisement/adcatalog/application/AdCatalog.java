@@ -38,14 +38,18 @@ public class AdCatalog {
     @NonNull
     public Ad findById(@NonNull AdId adId) {
         Objects.requireNonNull(adId, "adId must not be null");
-        return adRepository.findByIdAndDeletedFalse(adId).orElseThrow(() -> new RuntimeException("Category Not Found!!!"));
+        return adRepository.findByIdAndDeletedFalse(adId).orElseThrow(() -> new RuntimeException("Ad Not Found!!!"));
     }
 
-    public List<Ad> findProducts(){
+    public List<Ad> findByCreatorId(@NonNull String creatorId){
+        return adRepository.findAllByCreatorIdEqualsAndDeletedFalse(creatorId);
+    }
+
+    public List<Ad> findProducts() {
         return adRepository.findAllByIsProductAndDeletedFalse(true);
     }
 
-    public List<Ad> findBasicAds(){
+    public List<Ad> findBasicAds() {
         return adRepository.findAllByIsProductAndDeletedFalse(false);
     }
 
@@ -58,11 +62,12 @@ public class AdCatalog {
 
     public Ad saveAd(AdDto adDto) {
         Money money = new Money();
-        if (adDto.getCurrency() != null){
+        if (adDto.getCurrency() != null) {
             money = new Money(adDto.getCurrency(), adDto.getPrice());
         }
-        Ad ad = new Ad(new AdId(), adDto.getTitle(), adDto.getDescription(), adDto.getTypes(), money, adDto.getQuantity(), adDto.isProduct(), adDto.getImgUrl());
-        for(String str: adDto.getCategories()){
+        Ad ad = new Ad(new AdId(), adDto.getTitle(), adDto.getDescription(), adDto.getCreatorId(), adDto.getTypes(),
+                money, adDto.getQuantity(), adDto.isProduct(), adDto.getImgUrl());
+        for (String str : adDto.getCategories()) {
             CategoryId categoryId = new CategoryId(str);
             Category category = categoryRepository.findByIdAndDeletedFalse(categoryId)
                     .orElseThrow(() -> new RuntimeException("Category Not Found!!!"));

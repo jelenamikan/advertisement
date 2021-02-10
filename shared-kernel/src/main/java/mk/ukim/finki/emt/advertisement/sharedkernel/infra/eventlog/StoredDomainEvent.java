@@ -6,6 +6,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import lombok.Getter;
+import lombok.Setter;
 import mk.ukim.finki.emt.advertisement.sharedkernel.domain.base.DomainEvent;
 import mk.ukim.finki.emt.advertisement.sharedkernel.infra.jackson.RawJsonDeserializer;
 import org.springframework.lang.NonNull;
@@ -16,6 +18,8 @@ import java.time.Instant;
 import java.util.Objects;
 
 @Entity
+@Getter
+@Setter
 @Table(name="event_log")
 public class StoredDomainEvent {
 

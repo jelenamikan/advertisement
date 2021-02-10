@@ -46,6 +46,12 @@ public class AdController {
         return adCatalog.findBasicAds();
     }
 
+    @GetMapping("/user/{creatorId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Ad> getAllAdsByCreator(@PathVariable String creatorId){
+        return adCatalog.findByCreatorId(creatorId);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Ad createAd(@RequestBody AdDto adDto){

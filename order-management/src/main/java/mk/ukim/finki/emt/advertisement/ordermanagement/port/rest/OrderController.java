@@ -33,7 +33,7 @@ public class OrderController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public Order createOrder(@RequestBody OrderForm form){
+    public OrderId createOrder(@RequestBody OrderForm form){
         return orderCatalog.createOrder(form);
     }
 }

@@ -25,6 +25,9 @@ public class AdDto {
     @NonNull
     private String description;
 
+    @NonNull
+    private String creatorId;
+
     Set<Type> types;
 
     private Currency currency;

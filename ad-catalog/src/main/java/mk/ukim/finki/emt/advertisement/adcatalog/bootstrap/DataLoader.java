@@ -46,6 +46,7 @@ public class DataLoader {
 
         Ad voz1 = createAd(new AdId("1"), "Се продава Форд Ескорт",
                 "Колата е во добра состојба и е регистрирана.",
+                "1",
                 types1,
                 new Money(Currency.EUR, 700),
                 1,
@@ -56,6 +57,7 @@ public class DataLoader {
 
         Ad voz2 = createAd(new AdId("2"), "Се продава Мерцедес Е220 Анангард",
                 "Продавам Мерцедес Е220 Авангард во извонредна состојба со целосна опрема.",
+                "1",
                 types1,
                 new Money(Currency.EUR, 1200),
                 1,
@@ -75,6 +77,7 @@ public class DataLoader {
 
         Ad ned1 = createAd(new AdId("3"), "Се издава стан во Карпош 4",
                 "Станот е трособен со централно греење на улица Вич.",
+                "2",
                 types2,
                 new Money(Currency.MKD, 10000),
                 1,
@@ -83,6 +86,7 @@ public class DataLoader {
 
         Ad ned2 = createAd(new AdId("4"), "Се издава стан во Центар",
                 "Станот е еднособен и целосно опремен.",
+                "3",
                 types2,
                 new Money(Currency.MKD, 15000),
                 1,
@@ -98,8 +102,8 @@ public class DataLoader {
 
     }
 
-    private Ad createAd(AdId adId, String name, String description, Set<Type> types, Money price, int qnt, boolean isProduct, String imgUrl) {
-        Ad ad = new Ad(adId, name, description, types, price, qnt, isProduct, imgUrl);
+    private Ad createAd(AdId adId, String name, String description, String creatorId, Set<Type> types, Money price, int qnt, boolean isProduct, String imgUrl) {
+        Ad ad = new Ad(adId, name, description, creatorId, types, price, qnt, isProduct, imgUrl);
         return ad;
     }
 }
