@@ -28,6 +28,8 @@ public class AdDto {
     @NonNull
     private String creatorId;
 
+    private String cityName;
+
     Set<Type> types;
 
     private Currency currency;

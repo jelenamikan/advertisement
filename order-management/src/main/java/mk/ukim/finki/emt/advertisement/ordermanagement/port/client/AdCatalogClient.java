@@ -47,7 +47,7 @@ class AdCatalogClient implements AdCatalog {
                     new ParameterizedTypeReference<List<Ad>>() {
                     }).getBody();
         } catch (Exception ex) {
-            LOGGER.error("Error retrieving products", ex);
+            LOGGER.error("Error retrieving ads", ex);
             return Collections.emptyList();
         }
     }
@@ -59,7 +59,7 @@ class AdCatalogClient implements AdCatalog {
                     new ParameterizedTypeReference<Ad>() {
                     }).getBody();
         } catch (Exception ex) {
-            LOGGER.error("Error retrieving product by id", ex);
+            LOGGER.error("Error retrieving ad by id", ex);
             return null;
         }
     }

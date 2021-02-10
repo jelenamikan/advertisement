@@ -9,6 +9,7 @@ import mk.ukim.finki.emt.advertisement.adcatalog.domain.repository.AdRepository;
 import mk.ukim.finki.emt.advertisement.adcatalog.domain.repository.CategoryRepository;
 import mk.ukim.finki.emt.advertisement.adcatalog.integration.OrderItemAddedEvent;
 import mk.ukim.finki.emt.advertisement.sharedkernel.domain.financial.Money;
+import mk.ukim.finki.emt.advertisement.sharedkernel.domain.geo.CityName;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,6 +54,10 @@ public class AdCatalog {
         return adRepository.findAllByIsProductAndDeletedFalse(false);
     }
 
+    public List<Ad> findAllByCity(CityName cityName) {
+        return adRepository.findAllByCityNameEqualsAndDeletedFalse(cityName);
+    }
+
     @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
     public void onOrderCreatedEvent(OrderItemAddedEvent event) {
         Ad ad = adRepository.findByIdAndDeletedFalse(event.getAdId()).orElseThrow(RuntimeException::new);
@@ -65,8 +70,9 @@ public class AdCatalog {
         if (adDto.getCurrency() != null) {
             money = new Money(adDto.getCurrency(), adDto.getPrice());
         }
-        Ad ad = new Ad(new AdId(), adDto.getTitle(), adDto.getDescription(), adDto.getCreatorId(), adDto.getTypes(),
-                money, adDto.getQuantity(), adDto.isProduct(), adDto.getImgUrl());
+        CityName cityName = new CityName(adDto.getCityName());
+        Ad ad = new Ad(new AdId(), adDto.getTitle(), adDto.getDescription(), adDto.getCreatorId(), cityName,
+                adDto.getTypes(), money, adDto.getQuantity(), adDto.isProduct(), adDto.getImgUrl());
         for (String str : adDto.getCategories()) {
             CategoryId categoryId = new CategoryId(str);
             Category category = categoryRepository.findByIdAndDeletedFalse(categoryId)

@@ -6,6 +6,7 @@ import mk.ukim.finki.emt.advertisement.adcatalog.domain.dto.AdDto;
 import mk.ukim.finki.emt.advertisement.adcatalog.domain.model.Ad;
 import mk.ukim.finki.emt.advertisement.adcatalog.domain.model.AdId;
 import mk.ukim.finki.emt.advertisement.adcatalog.domain.model.Category;
+import mk.ukim.finki.emt.advertisement.sharedkernel.domain.geo.CityName;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +41,12 @@ public class AdController {
         return adCatalog.findProducts();
     }
 
+    @GetMapping("/city/{cityName}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Ad> getAllByCityName(@PathVariable CityName cityName){
+        return adCatalog.findAllByCity(cityName);
+    }
+
     @GetMapping("/basic")
     @ResponseStatus(HttpStatus.OK)
     public List<Ad> getAllBasicAds(){
@@ -55,6 +62,7 @@ public class AdController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Ad createAd(@RequestBody AdDto adDto){
+        System.out.println(adDto.toString());
         return adCatalog.saveAd(adDto);
     }
 

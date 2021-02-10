@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import mk.ukim.finki.emt.advertisement.sharedkernel.domain.base.AbstractEntity;
 import mk.ukim.finki.emt.advertisement.sharedkernel.domain.financial.Money;
+import mk.ukim.finki.emt.advertisement.sharedkernel.domain.geo.CityName;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -25,6 +26,9 @@ public class Ad extends AbstractEntity<AdId> {
 
     private String creatorId;
 
+    @Embedded
+    private CityName cityName;
+
     @ElementCollection(targetClass = Type.class)
     @CollectionTable(name="ad_types")
     @Column(name = "types")
@@ -45,12 +49,13 @@ public class Ad extends AbstractEntity<AdId> {
     @ManyToMany(mappedBy = "ads", fetch = FetchType.EAGER)
     private Set<Category> categories = new HashSet<>();
 
-    public Ad(AdId id, String title, String description, String creatorId, Set<Type> types, Money money, int quantity,
-              boolean isProduct, String imgUrl) {
+    public Ad(AdId id, String title, String description, String creatorId, CityName cityName, Set<Type> types,
+              Money money, int quantity, boolean isProduct, String imgUrl) {
         super(id);
         this.title = title;
         this.description = description;
         this.creatorId = creatorId;
+        this.cityName = cityName;
         this.types = types;
         this.money = money;
         this.quantity = quantity;
@@ -60,10 +65,12 @@ public class Ad extends AbstractEntity<AdId> {
         deleted = false;
     }
 
-    public Ad(String title, String description, String creatorId, Money money, int quantity, boolean isProduct, String imgUrl) {
+    public Ad(String title, String description, String creatorId, CityName cityName, Money money, int quantity,
+              boolean isProduct, String imgUrl) {
         this.title = title;
         this.description = description;
         this.creatorId = creatorId;
+        this.cityName = cityName;
         this.money = money;
         this.quantity = quantity;
         this.isProduct = isProduct;
