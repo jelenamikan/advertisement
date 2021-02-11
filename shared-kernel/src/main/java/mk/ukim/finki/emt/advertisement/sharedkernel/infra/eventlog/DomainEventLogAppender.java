@@ -11,7 +11,7 @@ public class DomainEventLogAppender {
 
     private final DomainEventLogService domainEventLogService;
 
-    DomainEventLogAppender(DomainEventLogService domainEventLogService) {
+    public DomainEventLogAppender(DomainEventLogService domainEventLogService) {
         this.domainEventLogService = domainEventLogService;
     }
 

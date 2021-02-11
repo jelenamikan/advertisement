@@ -2,6 +2,7 @@ package mk.ukim.finki.emt.advertisement.ordermanagement.domain.event;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
 import mk.ukim.finki.emt.advertisement.ordermanagement.domain.model.OrderId;
 import mk.ukim.finki.emt.advertisement.sharedkernel.domain.base.DomainEvent;
 import org.springframework.lang.NonNull;
@@ -9,6 +10,7 @@ import org.springframework.lang.NonNull;
 import java.time.Instant;
 import java.util.Objects;
 
+@Getter
 public class OrderCreated implements DomainEvent {
 
     @JsonProperty("orderId")

@@ -18,7 +18,7 @@ import java.time.Instant;
 import java.util.Objects;
 
 @Entity
-@Getter
+//@Getter
 @Setter
 @Table(name="event_log")
 public class StoredDomainEvent {
